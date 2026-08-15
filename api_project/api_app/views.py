@@ -50,3 +50,16 @@ def student_list_add(request):
 #             'success': False,
 #             'error': serializer_data.errors
 #         })
+
+
+@api_view(['GET', "PATCH", "DELETE"])
+def student_details(request, pk):
+    if request.method == 'GET':
+        student_data = StudentModel.objects.get(id = pk)
+        serializer_data = StudentSerializers(student_data)
+        return Response({
+                    "success": True,
+                    "message": "student Data Successfully",
+                    'data': serializer_data.data
+                })
+        
