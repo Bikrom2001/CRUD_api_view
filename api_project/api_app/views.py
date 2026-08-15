@@ -54,12 +54,33 @@ def student_list_add(request):
 
 @api_view(['GET', "PATCH", "DELETE"])
 def student_details(request, pk):
+    
+    try:
+       student_data = StudentModel.objects.get(id = pk)
+       
+    except:
+        return Response({
+            "success": False,
+            "message": "student Data Not Found",
+        })
+    
     if request.method == 'GET':
-        student_data = StudentModel.objects.get(id = pk)
+        
         serializer_data = StudentSerializers(student_data)
         return Response({
                     "success": True,
                     "message": "student Data Successfully",
                     'data': serializer_data.data
                 })
+        
+    elif request.method =="PATCH":
+        serializer_data =StudentSerializers(student_data, data = request.data)
+        if serializer_data.is_valid():
+            serializer_data.save()
+            return Response({
+                "success": True,
+                "message": "student Updated Successfully",
+                'data': serializer_data.data  
+            })
+        
         
