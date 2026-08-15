@@ -11,5 +11,9 @@ def student_list(request):
     if request.method == 'GET':
         student_data = StudentModel.objects.all()
         serializer_data = StudentSerializers(student_data, many=True) 
-        return Response(serializer_data.data)
+        return Response({
+            "success": True,
+            "message": "student Data Successfully",
+            'data': serializer_data.data
+        })
 
