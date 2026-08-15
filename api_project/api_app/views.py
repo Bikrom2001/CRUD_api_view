@@ -82,5 +82,13 @@ def student_details(request, pk):
                 "message": "student Updated Successfully",
                 'data': serializer_data.data  
             })
+            
+    elif request.method =='DELETE':
+        student_data.delete()
+        return Response({
+            "success": True,
+            "message": "student Delete Successfully",
+            "data": []
+        })
         
         
